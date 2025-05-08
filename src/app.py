@@ -5,6 +5,8 @@ import pickle
 import json
 import os
 
+base_dir = os.path.dirname(os.path.abspath(__file__))
+
 def check_route(df, route_frequency):
     '''Checks if route in frequency, returns None if not present.'''
 
@@ -35,7 +37,7 @@ if __name__ == '__main__':
     st.image(os.path.join(os.path.dirname(__file__), "static", "photo.jpg"))
 
     # Load the trained model
-    model_path = os.path.join(os.getcwd(), "models", "model.pkl")
+    model_path = os.path.join(os.path.dirname(base_dir), "models", "model.pkl")
 
     if not os.path.exists(model_path):
         st.error(f"Model file not found: {model_path}")
@@ -43,11 +45,13 @@ if __name__ == '__main__':
 
     with open(model_path, "rb") as f:
         model = pickle.load(f)
+        
+    print("Model loaded successfully.")
 
     #load data
-    route_frequency_path = os.path.join(os.getcwd(), "src", "static", "route_frequency.json")
-    destination_path = os.path.join(os.getcwd(), "src", "static", "unique_destination.json")
-    origin_path = os.path.join(os.getcwd(), "src", "static", "unique_origin.json")
+    route_frequency_path = os.path.join(base_dir, "static", "route_frequency.json")
+    destination_path = os.path.join(base_dir, "static", "unique_destination.json")
+    origin_path = os.path.join(base_dir, "static", "unique_origin.json")
 
     with open(origin_path, 'r') as f:
         unique_origin = json.load(f)
